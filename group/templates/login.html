@@ -1,0 +1,13 @@
+<html>
+<title>
+Redis Example
+</title>
+<body>
+<form action="/login" method="post">
+Username:  <input type="text" name="username">
+Password:  <input type="text" name="password">
+<input type="submit" value="Submit">
+{% module xsrf_form_html() %}
+</form>
+</body>
+</html>
