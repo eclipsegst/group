@@ -1,3 +1,16 @@
-<td style="width=50dp">Name: {% module linkify(group["name"]) %} </td>
-<td style="width=50dp">Created by: {% module linkify(group["created_by"]) %} </td>
-<td style="width=50dp">Created at: {% module linkify(group["created_at"]) %} </td>
+<td style="width=100dp">{{ escape(group["id"]) }}</td>
+<td style="width=100dp">{{ escape(group["name"]) }}</td>
+<td style="width=100dp">{{ escape(group["description"]) }}</td>
+<td style="width=100dp">{{ escape(group["category_id"]) }}</td>
+<td style="width=100dp">{{ escape(group["created_by"]) }}</td>
+<td style="width=100dp">{{ escape(group["created_date"]) }}</td>
+
+<td style="width=50dp">
+	<form role="form" action="http://localhost:8888/group/update/{% module linkify(group["id"]) %}" method="get"> 
+		{% module xsrf_form_html() %}
+		<div class="form-group">
+			<input type="hidden" name="key" value="{{ escape(group["id"]) }}"/>
+			<input type="submit" class="submit" value="{{ _("Update") }}" class="btn btn-default"/>
+		</div>
+	</form>
+</td>

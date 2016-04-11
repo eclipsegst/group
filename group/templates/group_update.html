@@ -1,0 +1,39 @@
+{% extends base.html %}
+{% block title %} Group Update {% end %}
+{% block content %}
+
+	<div class="row">
+		<div class="col-sm-6">
+			<h1>Group Update</h1>
+			<p> We only allow to modify group name.</p>
+			<!-- Are we allow duplicate group name? -->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<form action="/group/update/{{ str(group["id"]) }}" method="post" id="groupform">
+				{% module xsrf_form_html() %}
+				<table>
+					<tr>
+						<td><input name="name" id="name" value={{ str(group["name"]) }} style="width:100px"></td>
+						<td style="padding-left:5px">
+							<input type="submit" value="{{ _("Update") }}">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-6">
+			<form role="form" action="http://localhost:8888/group/delete/{% module linkify(group["id"]) %}" method="post"> 
+				{% module xsrf_form_html() %}
+				<input type="hidden" name="key" value="{{ escape(group["id"]) }}"/>
+				<input type="submit" class="submit" value="{{ _("Delete") }}"/>
+			</form>
+		</div>
+	</div>
+		
+{% end %}

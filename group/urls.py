@@ -1,53 +1,11 @@
-import tornado.httpserver
-import tornado.ioloop
-import tornado.options
 import tornado.web
-import redis
-import os.path
-import uuid
-import time
-import json
-
-from hashlib import md5
-from tornado.options import define, options
-
-define("port", default=8888, help="run on the given port", type=int)
-
-class Application(tornado.web.Application):
-	tornado.options.parse_command_line()
-	application = tornado.web.Application([
-		(r"/", MainHandler),
-        (r"/group/new", GroupNewHandler),
-        (r"/group/uodate", GroupUpdateHandler),
-        (r"/group/delete", GroupDeleteHandler),
-        (r"/group/join", GroupJoinHandler),
-        (r"/group/leave", GroupLeaveHandler),
-        (r"/login", Login)
-	],
-    cookie_secret="TODO:CREATE_COOKIES_SECRET",
-    template_path=os.path.join(os.path.dirname(__file__), "templates"),
-    static_path=os.path.join(os.path.dirname(__file__), "static"),
-    xsrf_cookies=True,
-    )
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        # open redis connection
-        pool = redis.ConnectionPool(host='localhost')
-        r = redis.StrictRedis(connection_pool=pool, charset="utf-8", decode_responses=True)
-        grouplist = r.lrange("group_list", 0, -1)
-        print(grouplist)
-        # retrieve group detail
-        print("get group detail")
+        pool = self.application.pool
+        cur = yield pool.execute("show tables;")
+        print(cur)
         list = []
-        for group in grouplist:
-            group_hash_dict = r.hgetall(group)
-            unidict = {k.decode('utf8'): v.decode('utf8') for k, v in group_hash_dict.items()}
-            print(unidict)
-            list.append(unidict)
-        print("list:")
-        print(list)
-        print(json.dumps(list, ensure_ascii=False))
         self.render("index.html", groups=list)       
 class GroupNewHandler(tornado.web.RequestHandler):
     def post(self):
@@ -133,13 +91,14 @@ class Login(tornado.web.RequestHandler):
             if self.r.get(username) == password:
                 self.write("Login successful!")
         else:
-            self.write("Login Unsuccesful..")    
-def main():
-	tornado.options.parse_command_line()
-    http_server = tornado.httpserver.HTTPServer(Application())
-	http_server.listen(options.port)
-	tornado.ioloop.IOLoop.current().start()
-
-if __name__ == "__main__":
-	main()
-
+            self.write("Login Unsuccesful..")
+            
+handlers = [
+	(r"/", MainHandler),
+    (r"/group/new", GroupNewHandler),
+    (r"/group/uodate", GroupUpdateHandler),
+    (r"/group/delete", GroupDeleteHandler),
+    (r"/group/join", GroupJoinHandler),
+    (r"/group/leave", GroupLeaveHandler),
+    (r"/login", Login)
+]

@@ -1,37 +1,43 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Group</title>
-	</head>
-	<body>
-		<h1>Group</h1>
-		
-		<div id="input">
-			<form action="/group/new" method="post" id="groupform">
-				<table>
-					<tr>
-						<td><input name="name" id="name" style="width:100px"></td>
-						<td style="padding-left:5px">
-							<input type="submit" value="{{ _("Create") }}">
-							{% module xsrf_form_html() %}
-						</td>
-					</tr>
-				</table>
-			</form>
+{% extends base.html %}
+{% block title %} Group {% end %}
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6">
+			<h1>Group</h1>
 		</div>
-		
-		<div>
-			<table>
-			{% for group in groups %}
-				<tr>
-				{% module Template("group_list_item.html", group=group) %}
-				</tr>
-			{% end %}
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<h3><a href="/group">Create new group</a></h3>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table">
+				<thread>
+					<tr>
+						<td style="width=200dp">ID</td>
+						<td style="width=200dp">Group name</td>
+						<td style="width=200dp">Description</td>
+						<td style="width=200dp">Category</td>
+						<td style="width=200dp">Created by</td>
+						<td style="width=200dp">Created date</td>
+						<td style="width=200dp">Action</td>
+					</tr>
+				</thread>
+				<tbody>
+				{% for group in groups %}
+					<tr>
+					{% module Template("group_list_item.html", group=group) %}
+					</tr>
+				{% end %}
+				</tbody>
 			</table>
 		</div>
-		
-		<script src="static/js/react.js"></script>
-		<script src="static/js/react-dom.js"></script>
-	</body>
-</html>
+	</div>
+	
+{% end %}

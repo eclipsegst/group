@@ -1,0 +1,40 @@
+{% extends base.html %}
+{% block title %} New Group {% end %}
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6">
+			<h1>New Group</h1>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-6">
+			<form role="form" action="/group" method="post" id="groupform">
+				{% module xsrf_form_html() %}
+				<div class="form-group">
+					<label for="name">Name:</label>
+					<input name="name" id="name" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="category">Category:</label>
+					<select name="category" class="form-control">
+					  <option value="1">Data Structure</option>
+					  <option value="2">Algorithm</option>
+					  <option value="3">Interview</option>
+					  <option value="4">Hobby</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="description"> Description:</label><br/>
+					<textarea name="description" class="form-control" rows="5" id="description"></textarea>
+				</div>
+				<div class="form-group">		
+					<input type="submit" value="{{ _("Create Group") }}" class="btn btn-default">
+				</div>
+			</form>
+		</div>
+	</div>
+	
+{% end %}
