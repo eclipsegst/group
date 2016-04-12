@@ -1,0 +1,14 @@
+<td style="width=100dp">{{ escape(category["id"]) }}</td>
+<td style="width=100dp">{{ escape(category["name"]) }}</td>
+<td style="width=100dp">{{ escape(category["created_by"]) }}</td>
+<td style="width=100dp">{{ escape(category["created_date"]) }}</td>
+
+<td style="width=50dp">
+	<form role="form" action="http://localhost:8888/category/update/{% module linkify(category["id"]) %}" method="get"> 
+		{% module xsrf_form_html() %}
+		<div class="form-group">
+			<input type="hidden" name="key" value="{{ escape(category["id"]) }}"/>
+			<input type="submit" class="submit" value="{{ _("Update") }}" class="btn btn-default"/>
+		</div>
+	</form>
+</td>

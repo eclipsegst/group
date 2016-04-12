@@ -5,28 +5,26 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-6">
-			<h1>Group</h1>
+			<h1>Group Categories</h1>
 		</div>
 	</div>
-	
+		
 	<div class="row">
 		<div class="col-sm-12">
 			<table class="table">
 				<thread>
 					<tr>
 						<td style="width=200dp">ID</td>
-						<td style="width=200dp">Group name</td>
-						<td style="width=200dp">Description</td>
-						<td style="width=200dp">Category</td>
+						<td style="width=200dp">Category name</td>
 						<td style="width=200dp">Created by</td>
 						<td style="width=200dp">Created date</td>
 						<td style="width=200dp">Action</td>
 					</tr>
 				</thread>
 				<tbody>
-				{% for group in groups %}
+				{% for category in categories %}
 					<tr>
-					{% module Template("group_list_item.html", group=group) %}
+					{% module Template("category_list_item.html", category=category) %}
 					</tr>
 				{% end %}
 				</tbody>
