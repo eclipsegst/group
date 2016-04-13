@@ -1,0 +1,7 @@
+import dbhelper
+
+import tornado.web
+class BaseHandler(tornado.web.RequestHandler):
+    @property
+    def db(self):
+        return dbhelper.POOL
